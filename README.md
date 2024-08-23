@@ -13,6 +13,6 @@
 - **Non-Fusion Recipes:** Traditional Indian dishes that remain authentic to their origins.
 
 ## OOP Concepts Demonstrated
-- **Encapsulation:** Recipes and their associated details (ingredients, steps, etc.) are encapsulated within classes to protect data and maintain modularity.
+ - **Encapsulation:** Recipes and their associated details (ingredients, steps, etc.) are encapsulated within classes to protect data and maintain modularity.
 - **Inheritance:** Base classes are used to define common properties and behaviors, with derived classes adding specific functionalities for fusion and non-fusion recipes.
 - **Polymorphism:** Demonstrated through method overriding, allowing different types of recipes to be handled uniformly while maintaining distinct behaviors.
