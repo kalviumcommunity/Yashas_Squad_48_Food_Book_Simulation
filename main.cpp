@@ -7,6 +7,7 @@ using namespace std;
 class Recipe {
 protected:
     string name;
+    
     vector<string> ingredients;
     string instructions;
     string cuisine_type;
