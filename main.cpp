@@ -7,29 +7,26 @@ using namespace std;
 class Recipe {
 protected:
     string name;
-    
     vector<string> ingredients;
     string instructions;
     string cuisine_type;
-    vector<string> steps; // New member variable for cooking steps
+    vector<string> steps;
 
 public:
     Recipe(string n, vector<string> ingr, string instr, string ctype, vector<string> stps)
         : name(n), ingredients(ingr), instructions(instr), cuisine_type(ctype), steps(stps) {}
 
     virtual void display_recipe() {
-        cout << "Recipe: " << name << endl;
-        cout << "Cuisine Type: " << cuisine_type << endl;
+        cout << "Recipe: " << this->name << endl;
+        cout << "Cuisine Type: " << this->cuisine_type << endl;
         cout << "Ingredients: ";
-        for (auto &ing : ingredients)
+        for (auto &ing : this->ingredients)
             cout << ing << " ";
         cout << endl;
-        cout << "Instructions: " << instructions << endl;
-
-        // Display the cooking steps
+        cout << "Instructions: " << this->instructions << endl;
         cout << "How to Cook:" << endl;
-        for (size_t i = 0; i < steps.size(); ++i) {
-            cout << i + 1 << ". " << steps[i] << endl;
+        for (size_t i = 0; i < this->steps.size(); ++i) {
+            cout << i + 1 << ". " << this->steps[i] << endl;
         }
     }
 };
@@ -41,7 +38,7 @@ public:
         : Recipe(n, ingr, instr, "North Indian", stps) {}
 
     void display_recipe() override {
-        Recipe::display_recipe();
+        this->Recipe::display_recipe();
     }
 };
 
@@ -51,7 +48,7 @@ public:
         : Recipe(n, ingr, instr, "South Indian", stps) {}
 
     void display_recipe() override {
-        Recipe::display_recipe();
+        this->Recipe::display_recipe();
     }
 };
 
@@ -61,7 +58,7 @@ public:
         : Recipe(n, ingr, instr, "Northeast Indian", stps) {}
 
     void display_recipe() override {
-        Recipe::display_recipe();
+        this->Recipe::display_recipe();
     }
 };
 
@@ -71,12 +68,12 @@ public:
         : Recipe(n, ingr, instr, "Northwest Indian", stps) {}
 
     void display_recipe() override {
-        Recipe::display_recipe();
+        this->Recipe::display_recipe();
     }
 };
 
 int main() {
-    // Create some recipes with 10 cooking steps each
+    // Recipes with 10 cooking steps
     vector<string> ingredients1 = {"Rice", "Chicken", "Spices"};
     vector<string> steps1 = {
         "Rinse the rice thoroughly until the water runs clear.",
@@ -91,6 +88,21 @@ int main() {
         "Garnish with fried onions, coriander, and serve hot."
     };
     North biryani("Biryani", ingredients1, "Cook rice, add chicken and spices", steps1);
+
+    vector<string> ingredients1_2 = {"Paneer", "Tomato", "Cream"};
+    vector<string> steps1_2 = {
+        "Cut paneer into cubes and set aside.",
+        "Make a tomato puree by blending fresh tomatoes.",
+        "Heat oil in a pan, add cumin seeds.",
+        "Add ginger-garlic paste and sauté.",
+        "Pour in the tomato puree and cook until oil separates.",
+        "Add spices like turmeric, cumin, and coriander powder.",
+        "Add cream and mix well.",
+        "Add the paneer cubes and simmer for 5-7 minutes.",
+        "Garnish with fresh coriander leaves.",
+        "Serve hot with naan or rice."
+    };
+    North paneerButterMasala("Paneer Butter Masala", ingredients1_2, "Cook paneer with tomato and cream", steps1_2);
 
     vector<string> ingredients2 = {"Coconut", "Rice", "Fish"};
     vector<string> steps2 = {
@@ -107,6 +119,21 @@ int main() {
     };
     South fishCurry("Fish Curry", ingredients2, "Cook fish with coconut and spices", steps2);
 
+    vector<string> ingredients2_2 = {"Rice", "Urad Dal", "Fenugreek Seeds"};
+    vector<string> steps2_2 = {
+        "Soak rice, urad dal, and fenugreek seeds separately overnight.",
+        "Grind them separately into a smooth batter.",
+        "Mix the batters together and let it ferment overnight.",
+        "Heat a tawa and pour a ladle of batter onto it.",
+        "Spread the batter evenly to form a thin dosa.",
+        "Drizzle oil around the edges.",
+        "Cook until the edges start lifting.",
+        "Flip the dosa and cook the other side for a few seconds.",
+        "Serve hot with coconut chutney and sambar.",
+        "Enjoy the dosa!"
+    };
+    South masalaDosa("Masala Dosa", ingredients2_2, "Make dosa batter and prepare dosa", steps2_2);
+
     vector<string> ingredients3 = {"Bamboo Shoots", "Pork", "Spices"};
     vector<string> steps3 = {
         "Clean and chop the bamboo shoots into thin slices.",
@@ -121,6 +148,21 @@ int main() {
         "Garnish with fresh herbs and serve hot."
     };
     Northeast bambooPork("Bamboo Pork", ingredients3, "Cook pork with bamboo shoots and spices", steps3);
+
+    vector<string> ingredients3_2 = {"Rice", "Fermented Soybeans", "Ginger"};
+    vector<string> steps3_2 = {
+        "Rinse the rice and soak it in water for 30 minutes.",
+        "Grind the fermented soybeans into a paste.",
+        "Heat oil in a pan and sauté ginger until fragrant.",
+        "Add the soybean paste and cook for a few minutes.",
+        "Mix the paste with cooked rice.",
+        "Steam the mixture until fully cooked.",
+        "Garnish with fresh herbs.",
+        "Serve hot with a side of vegetable curry.",
+        "Enjoy the unique flavors of the dish.",
+        "Perfect for a traditional Northeast Indian meal."
+    };
+    Northeast fermentedRice("Fermented Rice", ingredients3_2, "Cook rice with fermented soybeans", steps3_2);
 
     vector<string> ingredients4 = {"Wheat", "Meat", "Spices"};
     vector<string> steps4 = {
@@ -137,31 +179,51 @@ int main() {
     };
     Northwest kebab("Kebab", ingredients4, "Grill meat with spices", steps4);
 
-    // Loop until user decides to exit
-    int choice;
+    vector<string> ingredients4_2 = {"Flour", "Butter", "Sugar"};
+    vector<string> steps4_2 = {
+        "Mix flour, sugar, and melted butter to form a dough.",
+        "Roll out the dough and cut it into small discs.",
+        "Heat oil in a pan.",
+        "Deep fry the discs until golden brown.",
+        "Let them cool and store in an airtight container.",
+        "Serve with tea or coffee.",
+        "Perfect for a light snack.",
+        "Enjoy the crunchy texture.",
+        "Best with a sprinkle of powdered sugar on top.",
+        "A traditional Northwest Indian treat."
+    };
+    Northwest mathri("Mathri", ingredients4_2, "Prepare and deep-fry dough discs", steps4_2);
+
+    int cuisineChoice, dishChoice;
     while (true) {
         cout << "\nChoose a cuisine region by number:" << endl;
-        cout << "1. North\n2. South\n3. Northeast\n4. Northwest\n5. Exit" << endl;
-        cin >> choice;
+        cout << "1. North Indian\n2. South Indian\n3. North East Indian\n4. North West Indian\n5. Exit" << endl;
+        cin >> cuisineChoice;
 
-        // Depending on the choice, display corresponding recipes
-        if (choice == 1) {
-            cout << "\nDisplaying North Indian recipes:" << endl;
-            biryani.display_recipe();
-        } else if (choice == 2) {
-            cout << "\nDisplaying South Indian recipes:" << endl;
-            fishCurry.display_recipe();
-        } else if (choice == 3) {
-            cout << "\nDisplaying Northeast Indian recipes:" << endl;
-            bambooPork.display_recipe();
-        } else if (choice == 4) {
-            cout << "\nDisplaying Northwest Indian recipes:" << endl;
-            kebab.display_recipe();
-        } else if (choice == 5) {
-            cout << "Exiting the program." << endl;
-            break; // Exit the loop and end the program
+        if (cuisineChoice == 5) {
+            cout << "Exiting program." << endl;
+            break;
+        }
+
+        cout << "Choose a dish from this region by number:" << endl;
+        cout << "1. " << (cuisineChoice == 1 ? "Biryani" : cuisineChoice == 2 ? "Fish Curry" : cuisineChoice == 3 ? "Bamboo Pork" : "Kebab") << endl;
+        cout << "2. " << (cuisineChoice == 1 ? "Paneer Butter Masala" : cuisineChoice == 2 ? "Masala Dosa" : cuisineChoice == 3 ? "Fermented Rice" : "Mathri") << endl;
+        cin >> dishChoice;
+
+        if (cuisineChoice == 1) {
+            if (dishChoice == 1) biryani.display_recipe();
+            else if (dishChoice == 2) paneerButterMasala.display_recipe();
+        } else if (cuisineChoice == 2) {
+            if (dishChoice == 1) fishCurry.display_recipe();
+            else if (dishChoice == 2) masalaDosa.display_recipe();
+        } else if (cuisineChoice == 3) {
+            if (dishChoice == 1) bambooPork.display_recipe();
+            else if (dishChoice == 2) fermentedRice.display_recipe();
+        } else if (cuisineChoice == 4) {
+            if (dishChoice == 1) kebab.display_recipe();
+            else if (dishChoice == 2) mathri.display_recipe();
         } else {
-            cout << "Invalid choice! Please select a valid option." << endl;
+            cout << "Invalid choice. Please try again." << endl;
         }
     }
 
