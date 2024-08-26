@@ -176,7 +176,7 @@ int main() {
     int cuisineChoice, dishChoice;
     while (true) {
         cout << "\nChoose a cuisine region by number:" << endl;
-        cout << "1. North\n2. South\n3. Northeast\n4. Northwest\n5. Exit" << endl;
+        cout << "1. North Indian\n2. South Indian \n3. Northeast Indian\n4. Northwest Indian\n5. Exit" << endl;
         cin >> cuisineChoice;
 
         if (cuisineChoice == 5) {
