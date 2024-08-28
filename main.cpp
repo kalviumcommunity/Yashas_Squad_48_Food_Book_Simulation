@@ -173,6 +173,14 @@ int main() {
         })
     };
 
+    // Array of vectors containing recipes from each region
+    vector<Recipe*> recipeArrays[] = { 
+        vector<Recipe*>(northRecipes.begin(), northRecipes.end()),
+        vector<Recipe*>(southRecipes.begin(), southRecipes.end()),
+        vector<Recipe*>(northeastRecipes.begin(), northeastRecipes.end()),
+        vector<Recipe*>(northwestRecipes.begin(), northwestRecipes.end())
+    };
+
     int cuisineChoice, dishChoice;
     while (true) {
         cout << "\nChoose a cuisine region by number:" << endl;
@@ -184,24 +192,12 @@ int main() {
             break;
         }
 
-        vector<Recipe*> chosenRecipes;
-        switch (cuisineChoice) {
-            case 1:
-                for (auto &recipe : northRecipes) chosenRecipes.push_back(&recipe);
-                break;
-            case 2:
-                for (auto &recipe : southRecipes) chosenRecipes.push_back(&recipe);
-                break;
-            case 3:
-                for (auto &recipe : northeastRecipes) chosenRecipes.push_back(&recipe);
-                break;
-            case 4:
-                for (auto &recipe : northwestRecipes) chosenRecipes.push_back(&recipe);
-                break;
-            default:
-                cout << "Invalid choice. Please try again." << endl;
-                continue;
+        if (cuisineChoice < 1 || cuisineChoice > 4) {
+            cout << "Invalid choice. Please try again." << endl;
+            continue;
         }
+
+        vector<Recipe*>& chosenRecipes = recipeArrays[cuisineChoice - 1];
 
         cout << "Choose a dish from this region by number:" << endl;
         for (size_t i = 0; i < chosenRecipes.size(); ++i) {
