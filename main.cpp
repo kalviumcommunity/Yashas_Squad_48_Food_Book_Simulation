@@ -16,6 +16,8 @@ public:
     Recipe(string n, vector<string> ingr, string instr, string ctype, vector<string> stps)
         : name(n), ingredients(ingr), instructions(instr), cuisine_type(ctype), steps(stps) {}
 
+    virtual ~Recipe() {} // Virtual destructor to ensure proper cleanup for derived classes
+
     void display_recipe() {
         cout << "Recipe: " << this->name << endl;
         cout << "Cuisine Type: " << this->cuisine_type << endl;
@@ -61,9 +63,9 @@ public:
 };
 
 int main() {
-    // North Indian Recipes
-    vector<North> northRecipes = {
-        North("Biryani", {"Rice", "Chicken", "Spices"}, "Cook rice, add chicken and spices", {
+    // North Indian Recipes (Using dynamic memory allocation)
+    vector<Recipe*> northRecipes = {
+        new North("Biryani", {"Rice", "Chicken", "Spices"}, "Cook rice, add chicken and spices", {
             "Rinse the rice thoroughly until the water runs clear.",
             "Soak the rice in water for 30 minutes.",
             "Marinate the chicken with yogurt, spices, and lemon juice for 1 hour.",
@@ -75,7 +77,7 @@ int main() {
             "Let the biryani rest for 10 minutes before serving.",
             "Garnish with fried onions, coriander, and serve hot."
         }),
-        North("Paneer Butter Masala", {"Paneer", "Tomato", "Cream"}, "Cook paneer with tomato and cream", {
+        new North("Paneer Butter Masala", {"Paneer", "Tomato", "Cream"}, "Cook paneer with tomato and cream", {
             "Cut paneer into cubes and set aside.",
             "Make a tomato puree by blending fresh tomatoes.",
             "Heat oil in a pan, add cumin seeds.",
@@ -89,9 +91,9 @@ int main() {
         })
     };
 
-    // South Indian Recipes
-    vector<South> southRecipes = {
-        South("Fish Curry", {"Coconut", "Rice", "Fish"}, "Cook fish with coconut and spices", {
+    // South Indian Recipes (Using dynamic memory allocation)
+    vector<Recipe*> southRecipes = {
+        new South("Fish Curry", {"Coconut", "Rice", "Fish"}, "Cook fish with coconut and spices", {
             "Grate fresh coconut and extract the coconut milk.",
             "Rinse the rice and soak it in water for 30 minutes.",
             "Clean and cut the fish into pieces.",
@@ -103,7 +105,7 @@ int main() {
             "Cook the fish in the coconut milk until tender.",
             "Serve the fish curry hot with steamed rice."
         }),
-        South("Masala Dosa", {"Rice", "Urad Dal", "Fenugreek Seeds"}, "Make dosa batter and prepare dosa", {
+        new South("Masala Dosa", {"Rice", "Urad Dal", "Fenugreek Seeds"}, "Make dosa batter and prepare dosa", {
             "Soak rice, urad dal, and fenugreek seeds separately overnight.",
             "Grind them separately into a smooth batter.",
             "Mix the batters together and let it ferment overnight.",
@@ -117,9 +119,9 @@ int main() {
         })
     };
 
-    // Northeast Indian Recipes
-    vector<Northeast> northeastRecipes = {
-        Northeast("Bamboo Pork", {"Bamboo Shoots", "Pork", "Spices"}, "Cook pork with bamboo shoots and spices", {
+    // Northeast Indian Recipes (Using dynamic memory allocation)
+    vector<Recipe*> northeastRecipes = {
+        new Northeast("Bamboo Pork", {"Bamboo Shoots", "Pork", "Spices"}, "Cook pork with bamboo shoots and spices", {
             "Clean and chop the bamboo shoots into thin slices.",
             "Boil the bamboo shoots in water to remove bitterness.",
             "Cut the pork into bite-sized pieces.",
@@ -131,7 +133,7 @@ int main() {
             "Simmer on low heat until the pork is tender.",
             "Garnish with fresh herbs and serve hot."
         }),
-        Northeast("Fermented Rice", {"Rice", "Fermented Soybeans", "Ginger"}, "Cook rice with fermented soybeans", {
+        new Northeast("Fermented Rice", {"Rice", "Fermented Soybeans", "Ginger"}, "Cook rice with fermented soybeans", {
             "Rinse the rice and soak it in water for 30 minutes.",
             "Grind the fermented soybeans into a paste.",
             "Heat oil in a pan and sauté ginger until fragrant.",
@@ -140,14 +142,13 @@ int main() {
             "Steam the mixture until fully cooked.",
             "Garnish with fresh herbs.",
             "Serve hot with a side of vegetable curry.",
-            "Enjoy the unique flavors of the dish.",
-            "Perfect for a traditional Northeast Indian meal."
+            "Enjoy the unique flavors of the dish."
         })
     };
 
-    // Northwest Indian Recipes
-    vector<Northwest> northwestRecipes = {
-        Northwest("Kebab", {"Wheat", "Meat", "Spices"}, "Grill meat with spices", {
+    // Northwest Indian Recipes (Using dynamic memory allocation)
+    vector<Recipe*> northwestRecipes = {
+        new Northwest("Kebab", {"Wheat", "Meat", "Spices"}, "Grill meat with spices", {
             "Prepare the dough using wheat flour and water.",
             "Knead the dough until smooth and pliable.",
             "Cut the meat into small pieces and marinate with spices.",
@@ -159,17 +160,15 @@ int main() {
             "Remove the kebabs from the grill and let them rest.",
             "Serve the kebabs hot with mint chutney and naan."
         }),
-        Northwest("Mathri", {"Flour", "Butter", "Sugar"}, "Prepare and deep-fry dough discs", {
+        new Northwest("Mathri", {"Flour", "Butter", "Sugar"}, "Prepare and deep-fry dough discs", {
             "Mix flour, sugar, and melted butter to form a dough.",
             "Roll out the dough and cut it into small discs.",
             "Heat oil in a pan.",
             "Deep fry the discs until golden brown.",
             "Let them cool and store in an airtight container.",
             "Serve with tea or coffee.",
-            "Perfect for a light snack.",
             "Enjoy the crunchy texture.",
-            "Best with a sprinkle of powdered sugar on top.",
-            "A traditional Northwest Indian treat."
+            "Best with a sprinkle of powdered sugar on top."
         })
     };
 
@@ -187,16 +186,16 @@ int main() {
         vector<Recipe*> chosenRecipes;
         switch (cuisineChoice) {
             case 1:
-                for (auto &recipe : northRecipes) chosenRecipes.push_back(&recipe);
+                chosenRecipes = northRecipes;
                 break;
             case 2:
-                for (auto &recipe : southRecipes) chosenRecipes.push_back(&recipe);
+                chosenRecipes = southRecipes;
                 break;
             case 3:
-                for (auto &recipe : northeastRecipes) chosenRecipes.push_back(&recipe);
+                chosenRecipes = northeastRecipes;
                 break;
             case 4:
-                for (auto &recipe : northwestRecipes) chosenRecipes.push_back(&recipe);
+                chosenRecipes = northwestRecipes;
                 break;
             default:
                 cout << "Invalid choice. Please try again." << endl;
@@ -215,6 +214,12 @@ int main() {
             cout << "Invalid dish choice. Please try again." << endl;
         }
     }
+
+    // Freeing dynamically allocated memory
+    for (auto recipe : northRecipes) delete recipe;
+    for (auto recipe : southRecipes) delete recipe;
+    for (auto recipe : northeastRecipes) delete recipe;
+    for (auto recipe : northwestRecipes) delete recipe;
 
     return 0;
 }
