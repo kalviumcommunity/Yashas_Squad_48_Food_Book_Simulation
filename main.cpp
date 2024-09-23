@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 using namespace std;
+
 // Base class: Recipe
 class Recipe {
 protected:
@@ -10,6 +11,7 @@ protected:
     string instructions;
     string cuisine_type;
     vector<string> steps;
+
 public:
     Recipe(string n, vector<string> ingr, string instr, string ctype, vector<string> stps)
         : name(n), ingredients(ingr), instructions(instr), cuisine_type(ctype), steps(stps) {}
@@ -19,7 +21,32 @@ public:
     void display_recipe() {
         cout << "Recipe: " << this->name << endl;
         cout << "Cuisine Type: " << this->cuisine_type << endl;
-	@@ -48,6 +50,11 @@ class South : public Recipe {
+        cout << "Ingredients: ";
+        for (const auto& ing : this->ingredients)
+            cout << ing << " ";
+        cout << endl;
+        cout << "Instructions: " << this->instructions << endl;
+        cout << "How to Cook:" << endl;
+        for (size_t i = 0; i < this->steps.size(); ++i) {
+            cout << i + 1 << ". " << this->steps[i] << endl;
+        }
+    }
+
+    string get_name() const {
+        return this->name;
+    }
+};
+
+// Derived classes for different regions
+class North : public Recipe {
+public:
+    North(string n, vector<string> ingr, string instr, vector<string> stps)
+        : Recipe(n, ingr, instr, "North Indian", stps) {}
+};
+
+class South : public Recipe {
+public:
+    South(string n, vector<string> ingr, string instr, vector<string> stps)
         : Recipe(n, ingr, instr, "South Indian", stps) {}
 };
 
@@ -31,7 +58,13 @@ public:
 class Northeast : public Recipe {
 public:
     Northeast(string n, vector<string> ingr, string instr, vector<string> stps)
-	@@ -61,9 +68,9 @@ class Northwest : public Recipe {
+        : Recipe(n, ingr, instr, "Northeast Indian", stps) {}
+};
+
+class Northwest : public Recipe {
+public:
+    Northwest(string n, vector<string> ingr, string instr, vector<string> stps)
+        : Recipe(n, ingr, instr, "Northwest Indian", stps) {}
 };
 
 int main() {
@@ -41,7 +74,11 @@ int main() {
             "Rinse the rice thoroughly until the water runs clear.",
             "Soak the rice in water for 30 minutes.",
             "Marinate the chicken with yogurt, spices, and lemon juice for 1 hour.",
-	@@ -75,7 +82,7 @@ int main() {
+            "Heat ghee in a large pot and add whole spices.",
+            "Add sliced onions and sauté until golden brown.",
+            "Add the marinated chicken and cook until browned.",
+            "Add water, bring to a boil, and add the soaked rice.",
+            "Cover and cook on low heat until the rice is fully cooked.",
             "Let the biryani rest for 10 minutes before serving.",
             "Garnish with fried onions, coriander, and serve hot."
         }),
@@ -49,7 +86,13 @@ int main() {
             "Cut paneer into cubes and set aside.",
             "Make a tomato puree by blending fresh tomatoes.",
             "Heat oil in a pan, add cumin seeds.",
-	@@ -89,9 +96,9 @@ int main() {
+            "Add ginger-garlic paste and sauté.",
+            "Pour in the tomato puree and cook until oil separates.",
+            "Add spices like turmeric, cumin, and coriander powder.",
+            "Add cream and mix well.",
+            "Add the paneer cubes and simmer for 5-7 minutes.",
+            "Garnish with fresh coriander leaves.",
+            "Serve hot with naan or rice."
         })
     };
 
@@ -59,7 +102,11 @@ int main() {
             "Grate fresh coconut and extract the coconut milk.",
             "Rinse the rice and soak it in water for 30 minutes.",
             "Clean and cut the fish into pieces.",
-	@@ -103,7 +110,7 @@ int main() {
+            "Marinate the fish with turmeric, salt, and chili powder.",
+            "Heat oil in a pan and sauté onions, garlic, and ginger.",
+            "Add tomatoes and cook until soft and pulpy.",
+            "Add the marinated fish and cook until it turns white.",
+            "Pour in the coconut milk and bring to a simmer.",
             "Cook the fish in the coconut milk until tender.",
             "Serve the fish curry hot with steamed rice."
         }),
@@ -67,7 +114,13 @@ int main() {
             "Soak rice, urad dal, and fenugreek seeds separately overnight.",
             "Grind them separately into a smooth batter.",
             "Mix the batters together and let it ferment overnight.",
-	@@ -117,9 +124,9 @@ int main() {
+            "Heat a tawa and pour a ladle of batter onto it.",
+            "Spread the batter evenly to form a thin dosa.",
+            "Drizzle oil around the edges.",
+            "Cook until the edges start lifting.",
+            "Flip the dosa and cook the other side for a few seconds.",
+            "Serve hot with coconut chutney and sambar.",
+            "Enjoy the dosa!"
         })
     };
 
@@ -77,7 +130,11 @@ int main() {
             "Clean and chop the bamboo shoots into thin slices.",
             "Boil the bamboo shoots in water to remove bitterness.",
             "Cut the pork into bite-sized pieces.",
-	@@ -131,7 +138,7 @@ int main() {
+            "Marinate the pork with salt, ginger, and garlic paste.",
+            "Heat oil in a pot and add whole spices.",
+            "Add the marinated pork and cook until browned.",
+            "Add the boiled bamboo shoots and stir well.",
+            "Pour in water or broth and bring to a boil.",
             "Simmer on low heat until the pork is tender.",
             "Garnish with fresh herbs and serve hot."
         }),
@@ -85,7 +142,8 @@ int main() {
             "Rinse the rice and soak it in water for 30 minutes.",
             "Grind the fermented soybeans into a paste.",
             "Heat oil in a pan and sauté ginger until fragrant.",
-	@@ -140,14 +147,13 @@ int main() {
+            "Add the soybean paste and cook for a few minutes.",
+            "Mix the paste with cooked rice.",
             "Steam the mixture until fully cooked.",
             "Garnish with fresh herbs.",
             "Serve hot with a side of vegetable curry.",
@@ -99,7 +157,11 @@ int main() {
             "Prepare the dough using wheat flour and water.",
             "Knead the dough until smooth and pliable.",
             "Cut the meat into small pieces and marinate with spices.",
-	@@ -159,17 +165,15 @@ int main() {
+            "Shape the marinated meat into kebabs.",
+            "Preheat the grill to a medium-high temperature.",
+            "Grill the kebabs until they are browned on all sides.",
+            "Baste the kebabs with butter or ghee while grilling.",
+            "Cook the kebabs until they are fully cooked inside.",
             "Remove the kebabs from the grill and let them rest.",
             "Serve the kebabs hot with mint chutney and naan."
         }),
@@ -115,7 +177,17 @@ int main() {
         })
     };
 
-	@@ -187,16 +191,16 @@ int main() {
+    int cuisineChoice, dishChoice;
+    while (true) {
+        cout << "\nChoose a cuisine region by number:" << endl;
+        cout << "1. North Indian\n2. South Indian \n3. Northeast Indian\n4. Northwest Indian\n5. Exit" << endl;
+        cin >> cuisineChoice;
+
+        if (cuisineChoice == 5) {
+            cout << "Exiting program." << endl;
+            break;
+        }
+
         vector<Recipe*> chosenRecipes;
         switch (cuisineChoice) {
             case 1:
@@ -132,7 +204,19 @@ int main() {
                 break;
             default:
                 cout << "Invalid choice. Please try again." << endl;
-	@@ -216,5 +220,11 @@ int main() {
+                continue;
+        }
+
+        cout << "Choose a dish from this region by number:" << endl;
+        for (size_t i = 0; i < chosenRecipes.size(); ++i) {
+            cout << i + 1 << ". " << chosenRecipes[i]->get_name() << endl;
+        }
+        cin >> dishChoice;
+
+        if (dishChoice >= 1 && dishChoice <= chosenRecipes.size()) {
+            chosenRecipes[dishChoice - 1]->display_recipe();
+        } else {
+            cout << "Invalid dish choice. Please try again." << endl;
         }
     }
 
